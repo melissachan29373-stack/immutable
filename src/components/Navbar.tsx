@@ -16,6 +16,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleMobileNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    const id = href.replace("#", "");
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      el?.scrollIntoView({ behavior: "smooth" });
+    }, 300);
+  };
+
   return (
     <nav
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
@@ -80,8 +93,8 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-muted transition-colors hover:text-primary"
-                  onClick={() => setMobileOpen(false)}
+                  className="block rounded-lg px-3 py-3 text-base text-muted transition-colors active:bg-primary/10 hover:text-primary"
+                  onClick={(e) => handleMobileNavClick(e, link.href)}
                 >
                   {link.label}
                 </a>
